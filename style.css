@@ -1,0 +1,535 @@
+/* ===== المتغيرات والألوان الأساسية لمتجر بلاش ===== */
+:root {
+    --bg-dark: #090a0f;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --neon-primary: #00f2fe;
+    --neon-secondary: #8a2be2;
+    --success-color: #10b981;
+    --error-color: #ef4444;
+    --text-main: #ffffff;
+    --text-muted: #9ca3af;
+    --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Cairo', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    min-height: 100vh;
+    overflow-x: hidden;
+    padding-bottom: 60px;
+}
+
+.container {
+    width: 92%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* ===== خلفية النيون المتحركة ===== */
+.bg-ambient {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(95px);
+    opacity: 0.35;
+    animation: floatOrb 12s infinite alternate ease-in-out;
+}
+
+.orb-1 {
+    width: 320px;
+    height: 320px;
+    background: var(--neon-secondary);
+    top: -90px;
+    right: -90px;
+}
+
+.orb-2 {
+    width: 300px;
+    height: 300px;
+    background: var(--neon-primary);
+    bottom: -90px;
+    left: -90px;
+    animation-delay: -6s;
+}
+
+@keyframes floatOrb {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(35px, 45px) scale(1.15); }
+}
+
+/* ===== التأثير الزجاجي العام ===== */
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+}
+
+/* ===== الشريط العلوي (Header) ===== */
+.glass-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(9, 10, 15, 0.8);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 14px 0;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.35rem;
+    text-decoration: none;
+    color: var(--text-main);
+}
+
+.logo i {
+    color: var(--neon-primary);
+    font-size: 1.65rem;
+    filter: drop-shadow(0 0 8px rgba(0, 242, 254, 0.6));
+}
+
+.logo strong {
+    color: var(--neon-primary);
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    justify-content: flex-end;
+    min-width: 220px;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    padding: 8px 14px;
+    flex: 1;
+    max-width: 280px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.search-box:focus-within {
+    border-color: var(--neon-primary);
+    box-shadow: 0 0 15px rgba(0, 242, 254, 0.25);
+}
+
+.search-box i {
+    color: var(--text-muted);
+    margin-left: 10px;
+}
+
+.search-box input {
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--text-main);
+    width: 100%;
+    font-size: 0.92rem;
+}
+
+.nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(138, 43, 226, 0.2);
+    border: 1px solid rgba(138, 43, 226, 0.5);
+    color: #fff;
+    padding: 9px 16px;
+    border-radius: 14px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: transform 0.25s var(--spring), background 0.3s, box-shadow 0.3s;
+}
+
+.nav-btn:hover {
+    background: rgba(138, 43, 226, 0.35);
+    box-shadow: 0 0 16px rgba(138, 43, 226, 0.4);
+}
+
+.nav-btn:active {
+    transform: scale(0.92);
+}
+
+/* ===== بانر الترحيب (Hero) ===== */
+.hero-banner {
+    margin: 24px 0;
+    padding: 28px 24px;
+    background: linear-gradient(135deg, rgba(138, 43, 226, 0.22), rgba(0, 242, 254, 0.1));
+}
+
+.badge-neon {
+    display: inline-block;
+    background: rgba(0, 242, 254, 0.15);
+    color: var(--neon-primary);
+    border: 1px solid rgba(0, 242, 254, 0.4);
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.hero-banner h1 {
+    font-size: 1.7rem;
+    margin-bottom: 8px;
+}
+
+.hero-banner p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* ===== أزرار التصنيفات ===== */
+.categories {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    scrollbar-width: none;
+}
+
+.categories::-webkit-scrollbar { display: none; }
+
+.cat-btn {
+    background: var(--glass-bg);
+    color: var(--text-muted);
+    border: 1px solid var(--glass-border);
+    padding: 8px 20px;
+    border-radius: 14px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: transform 0.25s var(--spring), background 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+.cat-btn:active { transform: scale(0.9); }
+
+.cat-btn.active {
+    background: linear-gradient(135deg, var(--neon-primary), var(--neon-secondary));
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 4px 18px rgba(0, 242, 254, 0.35);
+}
+
+/* ===== شبكة وكروت الألعاب ===== */
+.games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
+    gap: 16px;
+}
+
+.game-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 12px;
+    cursor: pointer;
+    transition: transform 0.3s var(--spring), border-color 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    animation: fadeInCard 0.4s ease forwards;
+}
+
+@keyframes fadeInCard {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.game-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(0, 242, 254, 0.5);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4), 0 0 15px rgba(0, 242, 254, 0.15);
+}
+
+.game-card:active { transform: scale(0.94); }
+
+.game-icon {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 16px;
+    object-fit: cover;
+    background: #161822;
+}
+
+.game-title {
+    font-size: 1rem;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.game-dev {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.game-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+.game-meta .size-tag {
+    color: var(--neon-primary);
+    font-weight: 600;
+}
+
+/* ===== أنيميشن التحميل (Shimmer) ===== */
+.shimmer-card {
+    height: 240px;
+    border-radius: 20px;
+    background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.09) 50%, rgba(255,255,255,0.03) 75%);
+    background-size: 200% 100%;
+    animation: shimmerAnim 1.5s infinite linear;
+    border: 1px solid var(--glass-border);
+}
+
+@keyframes shimmerAnim {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* ===== النافذة المنبثقة (Modal) ===== */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.78);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    width: 100%;
+    max-width: 450px;
+    padding: 24px;
+    position: relative;
+    background: #12141e;
+    transform: scale(0.85) translateY(20px);
+    transition: transform 0.35s var(--spring);
+}
+
+.modal-overlay.show .modal-content {
+    transform: scale(1) translateY(0);
+}
+
+.close-modal {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--glass-border);
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: transform 0.2s var(--spring);
+}
+
+.close-modal:active { transform: scale(0.85); }
+
+.modal-header-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 16px;
+}
+
+.modal-icon {
+    width: 78px;
+    height: 78px;
+    border-radius: 18px;
+    object-fit: cover;
+    border: 1px solid var(--glass-border);
+}
+
+.modal-badges {
+    display: flex;
+    gap: 8px;
+    margin-top: 6px;
+    flex-wrap: wrap;
+}
+
+.modal-badge {
+    font-size: 0.78rem;
+    padding: 3px 10px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--neon-primary);
+}
+
+.modal-desc {
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+.download-btn, .submit-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 14px;
+    border-radius: 16px;
+    border: none;
+    background: linear-gradient(135deg, var(--neon-primary), var(--neon-secondary));
+    color: #fff;
+    font-size: 1.05rem;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(0, 242, 254, 0.35);
+    transition: transform 0.25s var(--spring), opacity 0.3s;
+}
+
+.download-btn:active, .submit-btn:active { transform: scale(0.95); }
+.submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* ===== تنسيق بوابة المطورين (submit.html) ===== */
+.form-container {
+    max-width: 650px;
+    margin: 30px auto;
+    padding: 28px 24px;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.form-control {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    padding: 12px 14px;
+    color: #fff;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-control:focus {
+    border-color: var(--neon-primary);
+    box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+}
+
+.form-control option {
+    background: #12141e;
+    color: #fff;
+}
+
+textarea.form-control {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+@media (max-width: 550px) {
+    .form-row { grid-template-columns: 1fr; }
+}
+
+.status-msg {
+    margin-top: 16px;
+    padding: 12px 16px;
+    border-radius: 14px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    display: none;
+    text-align: center;
+}
+
+.status-msg.success {
+    display: block;
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid var(--success-color);
+    color: var(--success-color);
+}
+
+.status-msg.error {
+    display: block;
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid var(--error-color);
+    color: var(--error-color);
+}
+
+.empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-muted);
+}

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجر بلاش | ألعاب وتطبيقات مجانية</title>
+    
+    <!-- خط عربي عصري -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
+    <!-- مكتبة الأيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- ربط ملف التصميم -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- خلفية الإضاءة النيون المتحركة -->
+    <div class="bg-ambient">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+    </div>
+
+    <!-- الشريط العلوي الزجاجي -->
+    <header class="glass-header">
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                <i class="fa-solid fa-gamepad"></i>
+                <span>متجر <strong>بلاش</strong></span>
+            </a>
+            
+            <div class="header-actions">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="searchInput" placeholder="ابحث عن لعبة أو تطبيق...">
+                </div>
+                <a href="submit.html" class="nav-btn">
+                    <i class="fa-solid fa-upload"></i>
+                    <span>بوابة المطورين</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="container">
+        
+        <!-- بانر الترحيب -->
+        <section class="hero-banner glass-card">
+            <span class="badge-neon">مجاني 100%</span>
+            <h1>مرحباً بك في متجر بلاش</h1>
+            <p>حمّل أحدث ألعاب وتطبيقات الأندرويد مباشرة وبأسرع وقت عبر بوت التليكرام الرسمي، أو انضم إلينا كمطور وانشر إبداعاتك مجاناً.</p>
+        </section>
+
+        <!-- شريط التصنيفات -->
+        <section class="categories" id="categoriesContainer">
+            <button class="cat-btn active" data-category="all">الكل</button>
+            <button class="cat-btn" data-category="action">أكشن</button>
+            <button class="cat-btn" data-category="puzzle">ألغاز</button>
+            <button class="cat-btn" data-category="arcade">أركيد</button>
+            <button class="cat-btn" data-category="apps">تطبيقات</button>
+        </section>
+
+        <!-- شبكة عرض الألعاب والتطبيقات -->
+        <section class="games-grid" id="gamesGrid"></section>
+
+    </main>
+
+    <!-- نافذة التفاصيل المنبثقة -->
+    <div class="modal-overlay" id="gameModal">
+        <div class="modal-content glass-card">
+            <button class="close-modal" id="closeModalBtn">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================
+        // ضع هنا معرّف (Username) بوت تحميل الألعاب بدون علامة @
+        const STORE_BOT_USERNAME = "Blushstore_bot";
+        // ============================================================
+
+        const gamesGrid = document.getElementById('gamesGrid');
+        const searchInput = document.getElementById('searchInput');
+        const catButtons = document.querySelectorAll('.cat-btn');
+        const gameModal = document.getElementById('gameModal');
+        const modalBody = document.getElementById('modalBody');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+
+        let currentCategory = 'all';
+        let allGames = [];
+
+        // 1. عرض شاشة التحميل (Shimmer)
+        function showShimmer() {
+            gamesGrid.innerHTML = '';
+            for (let i = 0; i < 4; i++) {
+                gamesGrid.innerHTML += '<div class="shimmer-card"></div>';
+            }
+        }
+
+        // 2. جلب الألعاب من ملف games.json
+        async function loadGames() {
+            showShimmer();
+            try {
+                const response = await fetch('games.json?t=' + new Date().getTime());
+                if (!response.ok) throw new Error('تعذر قراءة ملف البيانات');
+                allGames = await response.json();
+                renderGames(allGames);
+            } catch (error) {
+                gamesGrid.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fa-solid fa-triangle-exclamation fa-2x" style="color: var(--neon-primary);"></i>
+                        <p style="margin-top:10px;">تعذر تحميل القائمة. تأكد من تشغيل الموقع عبر Live Server أو GitHub Pages.</p>
+                    </div>`;
+            }
+        }
+
+        // 3. عرض الكروت
+        function renderGames(gamesList) {
+            gamesGrid.innerHTML = '';
+
+            if (gamesList.length === 0) {
+                gamesGrid.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fa-solid fa-ghost fa-2x"></i>
+                        <p style="margin-top:10px;">لا توجد نتائج مطابقة لبحثك حالياً.</p>
+                    </div>`;
+                return;
+            }
+
+            gamesList.forEach(game => {
+                const card = document.createElement('div');
+                card.className = 'game-card';
+                card.innerHTML = `
+                    <img src="${game.icon}" alt="${game.title}" class="game-icon" loading="lazy">
+                    <div class="game-title">${game.title}</div>
+                    <div class="game-dev"><i class="fa-solid fa-code"></i> ${game.developer}</div>
+                    <div class="game-meta">
+                        <span>${game.categoryName}</span>
+                        <span class="size-tag">${game.size}</span>
+                    </div>
+                `;
+                card.addEventListener('click', () => openModal(game));
+                gamesGrid.appendChild(card);
+            });
+        }
+
+        // 4. الفلترة والبحث
+        function filterGames() {
+            const query = searchInput.value.trim().toLowerCase();
+            const filtered = allGames.filter(game => {
+                const matchesCategory = currentCategory === 'all' || game.category === currentCategory;
+                const matchesSearch =
+                    game.title.toLowerCase().includes(query) ||
+                    game.developer.toLowerCase().includes(query) ||
+                    game.description.toLowerCase().includes(query);
+                return matchesCategory && matchesSearch;
+            });
+            renderGames(filtered);
+        }
+
+        // 5. فتح وإغلاق نافذة التفاصيل
+        function openModal(game) {
+            const telegramLink = `https://t.me/${STORE_BOT_USERNAME}?start=${game.telegramStartParam}`;
+            modalBody.innerHTML = `
+                <div class="modal-header-info">
+                    <img src="${game.icon}" alt="${game.title}" class="modal-icon">
+                    <div>
+                        <h2>${game.title}</h2>
+                        <div class="game-dev" style="margin-top: 3px;">بواسطة: ${game.developer}</div>
+                        <div class="modal-badges">
+                            <span class="modal-badge">${game.categoryName}</span>
+                            <span class="modal-badge">${game.version}</span>
+                            <span class="modal-badge">${game.size}</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="modal-desc">${game.description}</p>
+                <a href="${telegramLink}" target="_blank" class="download-btn">
+                    <i class="fa-brands fa-telegram fa-lg"></i>
+                    <span>تحميل عبر تليكرام</span>
+                </a>
+            `;
+            gameModal.classList.add('show');
+        }
+
+        function closeModal() {
+            gameModal.classList.remove('show');
+        }
+
+        closeModalBtn.addEventListener('click', closeModal);
+        gameModal.addEventListener('click', (e) => {
+            if (e.target === gameModal) closeModal();
+        });
+
+        // 6. أحداث التصنيفات والبحث
+        catButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                catButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentCategory = btn.dataset.category;
+                filterGames();
+            });
+        });
+
+        searchInput.addEventListener('input', filterGames);
+
+        // تشغيل المتجر
+        loadGames();
+    </script>
+</body>
+</html>

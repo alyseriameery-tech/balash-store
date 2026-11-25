@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة المطورين | متجر بلاش</title>
+    
+    <!-- خط عربي عصري -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
+    <!-- مكتبة الأيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- ربط نفس ملف التصميم -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- خلفية الإضاءة النيون المتحركة -->
+    <div class="bg-ambient">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+    </div>
+
+    <!-- الشريط العلوي -->
+    <header class="glass-header">
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                <i class="fa-solid fa-gamepad"></i>
+                <span>متجر <strong>بلاش</strong></span>
+            </a>
+            
+            <a href="index.html" class="nav-btn">
+                <i class="fa-solid fa-arrow-right"></i>
+                <span>العودة للمتجر</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- استمارة المطورين -->
+    <main class="container">
+        <section class="form-container glass-card">
+            <span class="badge-neon">انشر إبداعك مجاناً</span>
+            <h1 style="margin-bottom: 8px; font-size: 1.5rem;">بوابة المطورين</h1>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 24px;">
+                املأ بيانات لعبتك أو تطبيقك بدقة، وسيتم إرسال الطلب مباشرة لإدارة متجر بلاش للمراجعة والنشر.
+            </p>
+
+            <form id="submitForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="gameTitle">اسم اللعبة أو التطبيق *</label>
+                        <input type="text" id="gameTitle" class="form-control" placeholder="مثال: ماغنيت 3D" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="devName">اسم المطور أو الاستوديو *</label>
+                        <input type="text" id="devName" class="form-control" placeholder="اسمك أو اسم فريقك" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="category">القسم *</label>
+                        <select id="category" class="form-control" required>
+                            <option value="action|أكشن">أكشن</option>
+                            <option value="puzzle|ألغاز">ألغاز</option>
+                            <option value="arcade|أركيد">أركيد</option>
+                            <option value="apps|تطبيقات">تطبيقات</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="version">رقم الإصدار *</label>
+                        <input type="text" id="version" class="form-control" placeholder="مثال: v1.0" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="size">حجم الملف *</label>
+                        <input type="text" id="size" class="form-control" placeholder="مثال: 45 MB" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="devContact">معرّف تليكرام للتواصل *</label>
+                        <input type="text" id="devContact" class="form-control" placeholder="@username" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="iconUrl">رابط صورة الأيقونة (اختياري)</label>
+                    <input type="url" id="iconUrl" class="form-control" placeholder="https://example.com/icon.png">
+                </div>
+
+                <div class="form-group">
+                    <label for="apkLink">رابط ملف الـ APK (ميديا فاير، درايف، أو تليكرام) *</label>
+                    <input type="url" id="apkLink" class="form-control" placeholder="https://..." required>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">وصف اللعبة أو التطبيق *</label>
+                    <textarea id="description" class="form-control" placeholder="اكتب وصفاً مشوقاً وأهم المميزات..." required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    <i class="fa-solid fa-paper-plane"></i>
+                    <span>إرسال الطلب للمراجعة</span>
+                </button>
+
+                <div id="statusMsg" class="status-msg"></div>
+            </form>
+        </section>
+    </main>
+
+    <script>
+        // ============================================================
+        // ضع هنا توكن (بوت المراجعة الثاني) والـ Chat ID الخاص بك
+        const WORKER_URL = "https://autumn-leaf-f7debalash-review.alyseri-ameery.workers.dev";
+        // ============================================================
+
+        const submitForm = document.getElementById('submitForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const statusMsg = document.getElementById('statusMsg');
+
+        submitForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // تجهيز البيانات
+            const title = document.getElementById('gameTitle').value.trim();
+            const developer = document.getElementById('devName').value.trim();
+            const [category, categoryName] = document.getElementById('category').value.split('|');
+            const version = document.getElementById('version').value.trim();
+            const size = document.getElementById('size').value.trim();
+            const contact = document.getElementById('devContact').value.trim();
+            const icon = document.getElementById('iconUrl').value.trim() || "https://placehold.co/300x300/12141e/00f2fe?text=App";
+            const apkLink = document.getElementById('apkLink').value.trim();
+            const description = document.getElementById('description').value.trim();
+
+            // توليد معرّف فريد تلقائياً
+            const generatedId = "app_" + Date.now().toString().slice(-5);
+
+            // تجهيز كود JSON جاهز للنسخ في حال الموافقة
+            const jsonReady = JSON.stringify({
+                id: generatedId,
+                title: title,
+                developer: developer,
+                category: category,
+                categoryName: categoryName,
+                version: version,
+                size: size,
+                icon: icon,
+                description: description,
+                telegramStartParam: generatedId
+            }, null, 2);
+
+            // تنسيق الرسالة التي ستصلك على تليكرام
+            const message = `
+🚀 *طلب نشر جديد في متجر بلاش*
+
+🎮 *الاسم:* ${title}
+👨‍💻 *المطور:* ${developer} (${contact})
+📂 *القسم:* ${categoryName}
+🏷 *الإصدار:* ${version} | 📦 *الحجم:* ${size}
+📝 *الوصف:* ${description}
+
+🔗 *رابط الـ APK:*
+${apkLink}
+
+🖼 *رابط الأيقونة:*
+${icon}
+
+📋 *كود JSON جاهز للنسخ (إذا وافقت عليه):*
+\`\`\`json
+${jsonReady}
+\`\`\`
+            `;
+
+            // تعطيل الزر أثناء الإرسال
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> <span>جاري الإرسال...</span>';
+            statusMsg.className = 'status-msg';
+
+            try {
+                const response = await fetch(WORKER_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        text: message
+    })
+});
+
+                const data = await response.json();
+
+                if (data.ok) {
+                    statusMsg.textContent = '✅ تم إرسال طلبك بنجاح! سيقوم فريق متجر بلاش بمراجعته قريباً.';
+                    statusMsg.classList.add('success');
+                    submitForm.reset();
+                } else {
+                    throw new Error(data.description || 'فشل الإرسال');
+                }
+            } catch (error) {
+                statusMsg.textContent = '❌ السبب: ' + error.message;
+                statusMsg.classList.add('error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> <span>إرسال الطلب للمراجعة</span>';
+            }
+        });
+    </script>
+</body>
+</html>
