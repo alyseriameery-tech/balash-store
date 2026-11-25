@@ -10,17 +10,5 @@
     "icon": "https://placehold.co/300x300/12141e/00f2fe?text=Magnet+3D",
     "description": "لعبة ألغاز مغناطيسية ثلاثية الأبعاد! استخدم قوى الجذب والتنافر لحل المراحل وتجاوز التحديات الذكية.",
     "telegramStartParam": "magnet3d"
-  },
-  {
-    "id": "chaos_run",
-    "title": "Chaos Run",
-    "developer": "إدارة متجر بلاش",
-    "category": "action",
-    "categoryName": "أكشن",
-    "version": "v1.2",
-    "size": "68 MB",
-    "icon": "https://placehold.co/300x300/1a1025/8a2be2?text=Chaos+Run",
-    "description": "انطلق في سباق حواجز سريع ومليء بالإثارة! تفادَ العقبات واجمع النقاط لتحطيم الأرقام القياسية.",
-    "telegramStartParam": "chaos_run"
   }
 ]
