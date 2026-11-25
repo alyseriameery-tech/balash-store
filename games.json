@@ -1,17 +1,5 @@
 [
   {
-    "id": "app_80504",
-    "title": "لعبة 0",
-    "developer": "امير",
-    "category": "action",
-    "categoryName": "أكشن",
-    "version": "0",
-    "size": "33",
-    "icon": "https://placehold.co/300x300/12141e/00f2fe?text=App",
-    "description": "مدري",
-    "telegramStartParam": "msg_3"
-  },
-  {
     "id": "magnet3d",
     "title": "ماغنيت 3D",
     "developer": "إدارة متجر بلاش",
