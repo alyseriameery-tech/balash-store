@@ -22,17 +22,5 @@
     "icon": "https://placehold.co/300x300/1a1025/8a2be2?text=Chaos+Run",
     "description": "انطلق في سباق حواجز سريع ومليء بالإثارة! تفادَ العقبات واجمع النقاط لتحطيم الأرقام القياسية.",
     "telegramStartParam": "chaos_run"
-  },
-  {
-    "id": "sample_app",
-    "title": "تطبيق تجريبي",
-    "developer": "مطور ضيف",
-    "category": "apps",
-    "categoryName": "تطبيقات",
-    "version": "v1.0",
-    "size": "15 MB",
-    "icon": "https://placehold.co/300x300/0b192c/00f2fe?text=App",
-    "description": "مثال لتطبيق أندرويد يظهر في قسم التطبيقات، ويمكنك تعديله أو حذفه لاحقاً بسهولة.",
-    "telegramStartParam": "sample_app"
   }
 ]
