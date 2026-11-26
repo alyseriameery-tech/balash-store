@@ -15,6 +15,262 @@
     
     <!-- ربط ملف التصميم -->
     <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* =========================================
+           تنسيقات واجهة تفاصيل اللعبة والميزات الجديدة
+           ========================================= */
+        .hidden { display: none !important; }
+
+        .game-details-page {
+            padding: 15px 0 60px;
+            animation: fadeIn 0.25s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .details-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+            gap: 10px;
+        }
+
+        .action-pill-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            color: #fff;
+            padding: 9px 15px;
+            border-radius: 12px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.92rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
+        }
+        .action-pill-btn:hover {
+            background: rgba(0, 242, 254, 0.18);
+            border-color: #00f2fe;
+        }
+        .action-pill-btn.danger:hover {
+            background: rgba(255, 71, 87, 0.2);
+            border-color: #ff4757;
+            color: #ff6b81;
+        }
+
+        .details-card {
+            padding: 22px;
+            border-radius: 20px;
+            margin-bottom: 18px;
+        }
+
+        .details-hero {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 20px;
+        }
+        .details-icon {
+            width: 88px;
+            height: 88px;
+            border-radius: 20px;
+            object-fit: cover;
+            flex-shrink: 0;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+        .details-title {
+            font-size: 1.45rem;
+            font-weight: 900;
+            margin: 0 0 4px;
+            line-height: 1.3;
+        }
+        .details-dev {
+            color: #00f2fe;
+            font-size: 0.92rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        /* شريط الإحصائيات مثل سوق بلاي */
+        .stats-strip {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            padding: 14px 10px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-left: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .stat-item:last-child { border-left: none; }
+        .stat-value {
+            font-size: 1.05rem;
+            font-weight: 900;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .stat-label {
+            font-size: 0.78rem;
+            color: #a0a8c0;
+            margin-top: 2px;
+        }
+
+        /* أزرار التحميل */
+        .download-section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .alt-download-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 13px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.98rem;
+            transition: 0.2s;
+        }
+        .alt-download-btn:hover {
+            background: rgba(255, 255, 255, 0.14);
+            border-color: #00f2fe;
+        }
+
+        /* معرض الصور (Screenshots) */
+        .section-heading {
+            font-size: 1.1rem;
+            font-weight: 800;
+            margin: 0 0 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .screenshots-slider {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            scroll-snap-type: x mandatory;
+        }
+        .screenshots-slider::-webkit-scrollbar { height: 6px; }
+        .screenshots-slider::-webkit-scrollbar-thumb {
+            background: rgba(0, 242, 254, 0.35);
+            border-radius: 10px;
+        }
+        .screenshot-img {
+            height: 210px;
+            width: auto;
+            border-radius: 14px;
+            object-fit: cover;
+            scroll-snap-align: start;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.2s;
+        }
+        .screenshot-img:hover { transform: scale(1.02); }
+
+        /* صندوق التقييم بالنجوم */
+        .rating-box {
+            text-align: center;
+            padding: 18px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .stars-row {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 12px 0;
+            direction: ltr;
+        }
+        .star-btn {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: #4b5563;
+            cursor: pointer;
+            transition: transform 0.15s, color 0.15s;
+        }
+        .star-btn.active, .star-btn:hover {
+            color: #fbbf24;
+            transform: scale(1.15);
+        }
+        .rating-msg {
+            font-size: 0.88rem;
+            color: #a0a8c0;
+        }
+
+        /* نافذة الإبلاغ وتكبير الصورة */
+        .report-form select,
+        .report-form textarea {
+            width: 100%;
+            background: rgba(13, 15, 23, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            color: #fff;
+            padding: 12px;
+            font-family: 'Cairo', sans-serif;
+            margin-bottom: 12px;
+            outline: none;
+        }
+        .report-form select:focus,
+        .report-form textarea:focus {
+            border-color: #00f2fe;
+        }
+
+        /* إشعار عائم (Toast) */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background: #00f2fe;
+            color: #0d0f17;
+            padding: 10px 22px;
+            border-radius: 30px;
+            font-weight: 800;
+            font-size: 0.92rem;
+            z-index: 9999;
+            opacity: 0;
+            transition: 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0, 242, 254, 0.35);
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .lightbox-img {
+            max-width: 92vw;
+            max-height: 85vh;
+            border-radius: 14px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.7);
+        }
+    </style>
 </head>
 <body>
 
@@ -27,7 +283,7 @@
     <!-- الشريط العلوي الزجاجي -->
     <header class="glass-header">
         <div class="container header-content">
-            <a href="index.html" class="logo">
+            <a href="index.html" class="logo" id="logoBtn">
                 <i class="fa-solid fa-gamepad"></i>
                 <span>متجر <strong>بلاش</strong></span>
             </a>
@@ -45,8 +301,8 @@
         </div>
     </header>
 
-    <!-- المحتوى الرئيسي -->
-    <main class="container">
+    <!-- المحتوى الرئيسي (قائمة الألعاب) -->
+    <main class="container" id="homeView">
         
         <!-- بانر الترحيب -->
         <section class="hero-banner glass-card">
@@ -69,33 +325,81 @@
 
     </main>
 
-    <!-- نافذة التفاصيل المنبثقة -->
-    <div class="modal-overlay" id="gameModal">
+    <!-- واجهة تفاصيل اللعبة (تظهر عند الضغط على أي لعبة) -->
+    <section class="container game-details-page hidden" id="detailsView"></section>
+
+    <!-- نافذة الإبلاغ عن مشكلة -->
+    <div class="modal-overlay" id="reportModal">
         <div class="modal-content glass-card">
-            <button class="close-modal" id="closeModalBtn">
+            <button class="close-modal" id="closeReportBtn">
                 <i class="fa-solid fa-xmark"></i>
             </button>
-            <div id="modalBody"></div>
+            <h2 style="margin-bottom: 12px;"><i class="fa-solid fa-flag" style="color:#ff4757;"></i> إبلاغ عن مشكلة</h2>
+            <p id="reportGameTitle" style="color:#a0a8c0; margin-bottom:14px; font-size:0.92rem;"></p>
+            <form class="report-form" id="reportForm">
+                <select id="reportReason" required>
+                    <option value="الرابط لا يعمل">الرابط لا يعمل</option>
+                    <option value="مشكلة في التثبيت">مشكلة في التثبيت</option>
+                    <option value="اللعبة لا تفتح أو تتوقف">اللعبة لا تفتح أو تتوقف</option>
+                    <option value="الإصدار قديم">الإصدار قديم</option>
+                    <option value="مشكلة أخرى">مشكلة أخرى</option>
+                </select>
+                <textarea id="reportDetails" rows="3" placeholder="اكتب تفاصيل إضافية (اختياري)..."></textarea>
+                <button type="submit" class="download-btn" style="border:none; cursor:pointer; width:100%;">
+                    <i class="fa-solid fa-paper-plane"></i>
+                    <span>إرسال البلاغ</span>
+                </button>
+            </form>
         </div>
     </div>
 
+    <!-- نافذة تكبير صور اللعبة -->
+    <div class="modal-overlay" id="lightboxModal">
+        <img id="lightboxImg" class="lightbox-img" src="" alt="صورة اللعبة">
+    </div>
+
+    <!-- إشعار عائم -->
+    <div class="toast" id="toast"></div>
+
     <script>
         // ============================================================
-        // ضع هنا معرّف (Username) بوت تحميل الألعاب بدون علامة @
+        // الإعدادات الأساسية
         const STORE_BOT_USERNAME = "Blushstore_bot";
+        const WORKER_URL = "https://autumn-leaf-f7debalash-review.alyseri-ameery.workers.dev";
         // ============================================================
 
+        const homeView = document.getElementById('homeView');
+        const detailsView = document.getElementById('detailsView');
         const gamesGrid = document.getElementById('gamesGrid');
         const searchInput = document.getElementById('searchInput');
         const catButtons = document.querySelectorAll('.cat-btn');
-        const gameModal = document.getElementById('gameModal');
-        const modalBody = document.getElementById('modalBody');
-        const closeModalBtn = document.getElementById('closeModalBtn');
+        const logoBtn = document.getElementById('logoBtn');
+
+        const reportModal = document.getElementById('reportModal');
+        const closeReportBtn = document.getElementById('closeReportBtn');
+        const reportForm = document.getElementById('reportForm');
+        const reportGameTitle = document.getElementById('reportGameTitle');
+        const lightboxModal = document.getElementById('lightboxModal');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const toastEl = document.getElementById('toast');
 
         let currentCategory = 'all';
         let allGames = [];
+        let activeGame = null;
 
-        // 1. عرض شاشة التحميل (Shimmer)
+        function showToast(msg) {
+            toastEl.textContent = msg;
+            toastEl.classList.add('show');
+            setTimeout(() => toastEl.classList.remove('show'), 2600);
+        }
+
+        function formatDownloads(num) {
+            if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M+';
+            if (num >= 1000) return (num / 1000).toFixed(1) + 'K+';
+            return String(num);
+        }
+
+        // 1. شاشة التحميل
         function showShimmer() {
             gamesGrid.innerHTML = '';
             for (let i = 0; i < 4; i++) {
@@ -103,7 +407,7 @@
             }
         }
 
-        // 2. جلب الألعاب من ملف games.json
+        // 2. جلب الألعاب
         async function loadGames() {
             showShimmer();
             try {
@@ -111,11 +415,19 @@
                 if (!response.ok) throw new Error('تعذر قراءة ملف البيانات');
                 allGames = await response.json();
                 renderGames(allGames);
+
+                // إذا تم فتح رابط مباشر للعبة (?game=id)
+                const params = new URLSearchParams(window.location.search);
+                const sharedId = params.get('game');
+                if (sharedId) {
+                    const found = allGames.find(g => g.id === sharedId);
+                    if (found) openGameDetails(found, false);
+                }
             } catch (error) {
                 gamesGrid.innerHTML = `
                     <div class="empty-state">
                         <i class="fa-solid fa-triangle-exclamation fa-2x" style="color: var(--neon-primary);"></i>
-                        <p style="margin-top:10px;">تعذر تحميل القائمة. تأكد من تشغيل الموقع عبر Live Server أو GitHub Pages.</p>
+                        <p style="margin-top:10px;">تعذر تحميل القائمة. تأكد من الاتصال بالإنترنت.</p>
                     </div>`;
             }
         }
@@ -123,7 +435,6 @@
         // 3. عرض الكروت
         function renderGames(gamesList) {
             gamesGrid.innerHTML = '';
-
             if (gamesList.length === 0) {
                 gamesGrid.innerHTML = `
                     <div class="empty-state">
@@ -145,7 +456,7 @@
                         <span class="size-tag">${game.size}</span>
                     </div>
                 `;
-                card.addEventListener('click', () => openModal(game));
+                card.addEventListener('click', () => openGameDetails(game, true));
                 gamesGrid.appendChild(card);
             });
         }
@@ -164,41 +475,278 @@
             renderGames(filtered);
         }
 
-        // 5. فتح وإغلاق نافذة التفاصيل
-        function openModal(game) {
+        // 5. فتح واجهة تفاصيل اللعبة
+        async function openGameDetails(game, pushHistory = true) {
+            activeGame = game;
+            homeView.classList.add('hidden');
+            detailsView.classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            if (pushHistory) {
+                const newUrl = `${window.location.pathname}?game=${encodeURIComponent(game.id)}`;
+                history.pushState({ gameId: game.id }, '', newUrl);
+            }
+
             const telegramLink = `https://t.me/${STORE_BOT_USERNAME}?start=${game.telegramStartParam}`;
-            modalBody.innerHTML = `
-                <div class="modal-header-info">
-                    <img src="${game.icon}" alt="${game.title}" class="modal-icon">
-                    <div>
-                        <h2>${game.title}</h2>
-                        <div class="game-dev" style="margin-top: 3px;">بواسطة: ${game.developer}</div>
-                        <div class="modal-badges">
-                            <span class="modal-badge">${game.categoryName}</span>
-                            <span class="modal-badge">${game.version}</span>
-                            <span class="modal-badge">${game.size}</span>
+            const screenshots = Array.isArray(game.screenshots) ? game.screenshots : [];
+            const extraLinks = Array.isArray(game.extraLinks) ? game.extraLinks : [];
+            const userRated = localStorage.getItem(`rated_${game.id}`);
+
+            const screenshotsHtml = screenshots.length ? `
+                <div class="details-card glass-card">
+                    <h3 class="section-heading"><i class="fa-solid fa-images" style="color:#00f2fe;"></i> صور من داخل اللعبة</h3>
+                    <div class="screenshots-slider">
+                        ${screenshots.map(src => `<img src="${src}" class="screenshot-img" alt="لقطة شاشة" onclick="openLightbox('${src}')">`).join('')}
+                    </div>
+                </div>` : '';
+
+            const extraLinksHtml = extraLinks.map(link => `
+                <a href="${link.url}" target="_blank" class="alt-download-btn" onclick="trackDownload('${game.id}')">
+                    <i class="fa-solid fa-cloud-arrow-down" style="color:#00f2fe;"></i>
+                    <span>تحميل عبر ${link.label}</span>
+                </a>
+            `).join('');
+
+            detailsView.innerHTML = `
+                <div class="details-top-bar">
+                    <button class="action-pill-btn" onclick="goBackHome()">
+                        <i class="fa-solid fa-arrow-right"></i>
+                        <span>رجوع</span>
+                    </button>
+                    <div style="display:flex; gap:8px;">
+                        <button class="action-pill-btn" onclick="shareGame()">
+                            <i class="fa-solid fa-share-nodes"></i>
+                            <span>مشاركة</span>
+                        </button>
+                        <button class="action-pill-btn danger" onclick="openReportModal()">
+                            <i class="fa-solid fa-flag"></i>
+                            <span>إبلاغ</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="details-card glass-card">
+                    <div class="details-hero">
+                        <img src="${game.icon}" alt="${game.title}" class="details-icon">
+                        <div>
+                            <h1 class="details-title">${game.title}</h1>
+                            <div class="details-dev">${game.developer}</div>
+                            <div class="modal-badges">
+                                <span class="modal-badge">${game.categoryName}</span>
+                                <span class="modal-badge">${game.version}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- شريط الإحصائيات -->
+                    <div class="stats-strip">
+                        <div class="stat-item">
+                            <div class="stat-value" id="statRating">-- <i class="fa-solid fa-star" style="color:#fbbf24; font-size:0.9rem;"></i></div>
+                            <div class="stat-label" id="statReviewers">جاري التحميل...</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="statDownloads">--</div>
+                            <div class="stat-label">عملية تحميل</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">${game.size}</div>
+                            <div class="stat-label">الحجم</div>
+                        </div>
+                    </div>
+
+                    <!-- أزرار التحميل -->
+                    <div class="download-section">
+                        <a href="${telegramLink}" target="_blank" class="download-btn" onclick="trackDownload('${game.id}')">
+                            <i class="fa-brands fa-telegram fa-lg"></i>
+                            <span>تحميل عبر تليكرام</span>
+                        </a>
+                        ${extraLinksHtml}
+                    </div>
+                </div>
+
+                ${screenshotsHtml}
+
+                <!-- الوصف -->
+                <div class="details-card glass-card">
+                    <h3 class="section-heading"><i class="fa-solid fa-circle-info" style="color:#00f2fe;"></i> حول هذه اللعبة</h3>
+                    <p class="modal-desc" style="margin:0; line-height:1.8;">${game.description}</p>
+                </div>
+
+                <!-- التقييم بالنجوم -->
+                <div class="details-card glass-card">
+                    <div class="rating-box">
+                        <h3 class="section-heading" style="justify-content:center; margin-bottom:4px;">قيّم هذه اللعبة</h3>
+                        <p class="rating-msg" id="ratingStatusMsg">
+                            ${userRated ? `لقد قيّمت هذه اللعبة بـ ${userRated} نجوم. شكراً لك!` : 'اضغط على النجوم لإضافة تقييمك'}
+                        </p>
+                        <div class="stars-row" id="starsRow">
+                            ${[1,2,3,4,5].map(n => `
+                                <button class="star-btn ${userRated && n <= Number(userRated) ? 'active' : ''}"
+                                        onclick="submitRating('${game.id}', ${n})"
+                                        ${userRated ? 'disabled' : ''}>
+                                    <i class="fa-solid fa-star"></i>
+                                </button>
+                            `).join('')}
                         </div>
                     </div>
                 </div>
-                <p class="modal-desc">${game.description}</p>
-                <a href="${telegramLink}" target="_blank" class="download-btn">
-                    <i class="fa-brands fa-telegram fa-lg"></i>
-                    <span>تحميل عبر تليكرام</span>
-                </a>
             `;
-            gameModal.classList.add('show');
+
+            // جلب الإحصائيات الحقيقية من Cloudflare KV
+            loadGameStats(game.id);
         }
 
-        function closeModal() {
-            gameModal.classList.remove('show');
+        function goBackHome() {
+            detailsView.classList.add('hidden');
+            homeView.classList.remove('hidden');
+            activeGame = null;
+            history.pushState({}, '', window.location.pathname);
         }
 
-        closeModalBtn.addEventListener('click', closeModal);
-        gameModal.addEventListener('click', (e) => {
-            if (e.target === gameModal) closeModal();
+        // دعم زر الرجوع في المتصفح والموبايل
+        window.addEventListener('popstate', () => {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('game');
+            if (id) {
+                const found = allGames.find(g => g.id === id);
+                if (found) openGameDetails(found, false);
+            } else {
+                detailsView.classList.add('hidden');
+                homeView.classList.remove('hidden');
+                activeGame = null;
+            }
         });
 
-        // 6. أحداث التصنيفات والبحث
+        logoBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            goBackHome();
+        });
+
+        // 6. جلب وتحديث الإحصائيات (التحميلات والتقييم)
+        function updateStatsUI(stats) {
+            const avg = stats.ratingCount > 0 ? (stats.ratingSum / stats.ratingCount).toFixed(1) : "0.0";
+            const ratingEl = document.getElementById('statRating');
+            const revEl = document.getElementById('statReviewers');
+            const dlEl = document.getElementById('statDownloads');
+
+            if (ratingEl) ratingEl.innerHTML = `${avg} <i class="fa-solid fa-star" style="color:#fbbf24; font-size:0.9rem;"></i>`;
+            if (revEl) revEl.textContent = `${stats.ratingCount} مراجعة`;
+            if (dlEl) dlEl.textContent = formatDownloads(stats.downloads || 0);
+        }
+
+        async function loadGameStats(gameId) {
+            try {
+                const res = await fetch(`${WORKER_URL}/api/stats?id=${encodeURIComponent(gameId)}`);
+                const stats = await res.json();
+                updateStatsUI(stats);
+            } catch (e) {
+                updateStatsUI({ downloads: 0, ratingSum: 0, ratingCount: 0 });
+            }
+        }
+
+        async function trackDownload(gameId) {
+            try {
+                const res = await fetch(`${WORKER_URL}/api/download`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: gameId })
+                });
+                const stats = await res.json();
+                if (stats && typeof stats.downloads === 'number') updateStatsUI(stats);
+            } catch (e) {}
+        }
+
+        async function submitRating(gameId, stars) {
+            if (localStorage.getItem(`rated_${gameId}`)) return;
+
+            // تحديث فوري للنجوم
+            const btns = document.querySelectorAll('#starsRow .star-btn');
+            btns.forEach((btn, idx) => {
+                btn.disabled = true;
+                if (idx < stars) btn.classList.add('active');
+            });
+
+            try {
+                const res = await fetch(`${WORKER_URL}/api/rate`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: gameId, rating: stars })
+                });
+                const stats = await res.json();
+                localStorage.setItem(`rated_${gameId}`, String(stars));
+                updateStatsUI(stats);
+                document.getElementById('ratingStatusMsg').textContent = `لقد قيّمت هذه اللعبة بـ ${stars} نجوم. شكراً لك!`;
+                showToast('شكراً لتقييمك!');
+            } catch (e) {
+                showToast('حدث خطأ أثناء إرسال التقييم');
+            }
+        }
+
+        // 7. مشاركة رابط اللعبة
+        async function shareGame() {
+            if (!activeGame) return;
+            const shareUrl = `${window.location.origin}${window.location.pathname}?game=${encodeURIComponent(activeGame.id)}`;
+            const shareData = {
+                title: `${activeGame.title} | متجر بلاش`,
+                text: `حمّل لعبة ${activeGame.title} مجاناً من متجر بلاش!`,
+                url: shareUrl
+            };
+
+            if (navigator.share) {
+                try { await navigator.share(shareData); return; } catch (e) {}
+            }
+            try {
+                await navigator.clipboard.writeText(shareUrl);
+                showToast('تم نسخ رابط اللعبة بنجاح!');
+            } catch (e) {
+                prompt('انسخ رابط اللعبة:', shareUrl);
+            }
+        }
+
+        // 8. الإبلاغ عن مشكلة
+        function openReportModal() {
+            if (!activeGame) return;
+            reportGameTitle.textContent = `اللعبة: ${activeGame.title}`;
+            reportModal.classList.add('show');
+        }
+
+        closeReportBtn.addEventListener('click', () => reportModal.classList.remove('show'));
+        reportModal.addEventListener('click', (e) => {
+            if (e.target === reportModal) reportModal.classList.remove('show');
+        });
+
+        reportForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!activeGame) return;
+            const reason = document.getElementById('reportReason').value;
+            const details = document.getElementById('reportDetails').value.trim();
+
+            try {
+                await fetch(`${WORKER_URL}/api/report`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        title: activeGame.title,
+                        reason,
+                        details
+                    })
+                });
+                reportModal.classList.remove('show');
+                reportForm.reset();
+                showToast('تم إرسال البلاغ للإدارة بنجاح!');
+            } catch (err) {
+                showToast('تعذر إرسال البلاغ، حاول مجدداً');
+            }
+        });
+
+        // 9. تكبير صور العرض
+        function openLightbox(src) {
+            lightboxImg.src = src;
+            lightboxModal.classList.add('show');
+        }
+        lightboxModal.addEventListener('click', () => lightboxModal.classList.remove('show'));
+
+        // 10. أحداث التصنيفات والبحث
         catButtons.forEach(btn => {
             btn.addEventListener('click', () => {
                 catButtons.forEach(b => b.classList.remove('active'));
@@ -208,7 +756,10 @@
             });
         });
 
-        searchInput.addEventListener('input', filterGames);
+        searchInput.addEventListener('input', () => {
+            if (!detailsView.classList.contains('hidden')) goBackHome();
+            filterGames();
+        });
 
         // تشغيل المتجر
         loadGames();
