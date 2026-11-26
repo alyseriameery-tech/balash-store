@@ -9,6 +9,9 @@
     "size": "110 MB",
     "icon": "icons/magnet3d_1795638060281.jpg",
     "description": "لعبة ألغاز مغناطيسية ثلاثية الأبعاد! استخدم قوى الجذب والتنافر لحل المراحل وتجاوز التحديات الذكية.",
-    "telegramStartParam": "magnet3d"
+    "telegramStartParam": "magnet3d",
+    "screenshots": [
+      "screenshots/magnet3d_1795733866057.jpg"
+    ]
   }
 ]
